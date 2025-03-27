@@ -5,31 +5,148 @@
 }
 
 $pdg: 16px;
+$br: 8px;
+$pfSize: 40px;
+
+@mixin boxDetail($radius: $br, $padding: $pdg) {
+  border-radius: $radius;
+  padding: $padding;
+}
+
+@mixin msgArrow($position: 'left') {
+  content: '';
+  display: block;
+  width: 0; height: 0;
+  border: 15px solid white;
+  border-radius: $br;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  position: absolute;
+  @if $position == 'left' {
+    left: -10px;
+  } @else if $position == 'right' {
+    left: unset;
+    right: -10px;
+  }
+  top: 6px;
+  z-index: -1;
+}
+
+html, body {margin:0;padding:0;height:100%;}
 
 body {
   display: flex;
   justify-content: center;
   margin: 0;
-  @include mobile() {flex-direction: column;}
+  //@include mobile() {flex-direction: column;}
+  .title {
+    text-align: center;
+    h1 {font-size: 20px;color: #633C14;}
+    p {font-size: 14px; margin: 0;}
+  }
   > section {
-    $leftWidth: 30%;
+    $leftWidth: 460px;
+    $leftHeight: 80%;
     padding: $pdg;
     gap: $pdg;
-    @include mobile {width: 100%;}
-    &:nth-child(1) {width: $leftWidth; background-color: red;}
-    &:nth-child(2) {width: calc(100% - $leftWidth); background-color: burlywood;}
+    height: 100%;
+    box-sizing: border-box;
+    //@include mobile {width: 100%;}
+    &:nth-child(1) {background-color: #F9DF03; width: $leftWidth;}
+    &:nth-child(2) {background-color: #808080; width: $leftWidth; margin-left: $leftWidth;}
+    &:nth-child(3) {background-color: #c95e5e; width: calc(100% - ($leftWidth * 2));}
     textarea {
       display: flex;
       width: 100%;
       box-sizing: border-box;
       border: 0;
-      border-radius: 4px;
-      min-height: 200px;
-      padding: $pdg;
+      @include boxDetail;
       font-family: Arial, Helvetica, sans-serif;
+      min-height: $leftHeight;
     }
-    p {
-      margin: 0;
+    button {
+      height: calc($leftHeight - 50px);
+      @include boxDetail();
+      border: 0;
+      background-color: #633C14;
+      color: white;
+      cursor: pointer;
+      position: relative;
+      will-change: transform;
+      transition: all .3s;
+      &:hover {
+        transform: scale(0.95);
+      }
     }
   }
-} 
+}
+
+.typeArea {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;left: 0;
+  box-sizing: border-box;
+}
+.kakao {
+  font-size: 14px;
+  #output {
+    background-color: #B2C7D9;
+    position: relative;
+    @include boxDetail;
+  }
+}
+
+.name {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  &:not(:first-child){padding-top:24px;}
+  &:not(.right)::before{
+    content: '';
+    display: flex;
+    width: $pfSize; height: $pfSize;
+    background: blue;
+    border-radius: $pdg;
+    margin-top: -4px;
+  }
+  &.right {
+    color: transparent;
+  }
+}
+
+.texts {
+  display: flex;
+  flex-direction: column;
+  gap: $br;
+  margin-left: calc($pfSize + 12px);
+  margin-top: calc(4px - $pdg);
+  p {
+    background: white;
+    @include boxDetail(4px, 10px);
+    margin: 0;
+    width: max-content;
+    position: relative;
+    z-index: 0;
+    &:first-child:not(.endLine)::before {
+      @include msgArrow(left);
+    }
+  }
+  > div {
+    display: flex;
+    align-items: flex-end;
+    gap: $br;
+    span { font-size:12px;}
+  }
+  &.right {
+    align-items: flex-end;
+    > div{flex-direction:row-reverse}
+    p:first-child::before { @include msgArrow('right')}
+  }
+}
+
+#buttons {
+  display: flex;
+  gap: $br;
+}
