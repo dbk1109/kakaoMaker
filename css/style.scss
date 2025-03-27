@@ -1,0 +1,35 @@
+@mixin mobile {
+  @media screen and (max-width:769px) {
+    @content;
+  }
+}
+
+$pdg: 16px;
+
+body {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  @include mobile() {flex-direction: column;}
+  > section {
+    $leftWidth: 30%;
+    padding: $pdg;
+    gap: $pdg;
+    @include mobile {width: 100%;}
+    &:nth-child(1) {width: $leftWidth; background-color: red;}
+    &:nth-child(2) {width: calc(100% - $leftWidth); background-color: burlywood;}
+    textarea {
+      display: flex;
+      width: 100%;
+      box-sizing: border-box;
+      border: 0;
+      border-radius: 4px;
+      min-height: 200px;
+      padding: $pdg;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    p {
+      margin: 0;
+    }
+  }
+} 

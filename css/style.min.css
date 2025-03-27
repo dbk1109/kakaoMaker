@@ -1,0 +1,40 @@
+body {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+@media screen and (max-width: 769px) {
+  body {
+    flex-direction: column;
+  }
+}
+body > section {
+  padding: 16px;
+  gap: 16px;
+}
+@media screen and (max-width: 769px) {
+  body > section {
+    width: 100%;
+  }
+}
+body > section:nth-child(1) {
+  width: 30%;
+  background-color: red;
+}
+body > section:nth-child(2) {
+  width: 70%;
+  background-color: burlywood;
+}
+body > section textarea {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 4px;
+  min-height: 200px;
+  padding: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+body > section p {
+  margin: 0;
+}/*# sourceMappingURL=style.min.css.map */

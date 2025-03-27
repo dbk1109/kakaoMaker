@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/style.min.css">
+  <title>Document</title>
+</head>
+<body>
+  <section>
+
+    <textarea id="inputText" rows="10" cols="50" placeholder="여기에 입력하세요"></textarea>
+
+    <button onclick="parseText()">Parse Text</button>
+
+  </section>
+  <section>
+    <div class="print"></div>
+    <div id="output"></div>
+  </section>
+  
+  <script>
+    function parseText() {
+
+          // textarea에서 텍스트 가져오기
+      let text = document.getElementById("inputText").value;
+
+      // 정규식 패턴
+      let regex = /\[([^\]]+)\] (오전|오후\d{1,2}:\d{1,2})\n([\s\S]+?)(?=\n\[\w+\]|\n*$)/g;
+
+      // 정규식에 매칭되는 모든 메시지 추출
+      let messages = [...text.matchAll(regex)].map(match => ({
+        name: match[1],    // 대괄호 안의 이름
+        time: match[2],    // 시간
+        message: match[3].split("\n").filter(line => line.trim() !== "")  // 메시지 줄 나누기 (빈 줄 필터링)
+      }));
+
+      // 결과 출력
+      let outputDiv = document.getElementById("output");
+      outputDiv.innerHTML = '';  // 이전 결과 지우기
+
+      messages.forEach(msg => {
+        let p = document.createElement("p");
+        // 각 메시지 줄을 <br>로 이어주기
+        p.innerHTML = `<strong>${msg.name}</strong> (${msg.time})<br>${msg.message.join("<br>")}`;
+        outputDiv.appendChild(p);
+      });
+
+      // 콘솔에 메시지 배열 출력
+      console.log(messages);
+
+    //function getValue() {
+      //let textareaValue = document.getElementById("myTalks").value;
+      //let outputDiv = document.querySelector(".print");
+      
+      //let parphGroup = textareaValue.split('\n');
+      
+
+      
+
+
+      //console.log(messages);
+
+        
+      //.map(line => `<p>${line}</p>`).join('.');
+      //console.log(parphGroup);
+      //let nameGroup = [...new Set([...document.getElementById("myTalks").value.matchAll(/\[([^\]]+)\]/g)].map(m => m[1]))];
+
+
+      //let regex = /\[([^\]]+)\] (오전|오후\d{1,2}:\d{1,2})\n([\s\S]*?)(?=\n\[\w+\]|\n*$)/g;
+
+      //let messages = [...textareaValue.matchAll(regex)].map(match => ({
+      //  name: match[1],    // 대괄호 안의 이름
+      //  time: match[2],    // 시간
+      //  message: match[3].trim() // 메시지 (줄바꿈 포함, 앞뒤 공백 제거)
+      //}));
+
+      //console.log(messages);
+
+      //messages.forEach(msg => {
+      //  // 메시지를 한 줄씩 나누기 (줄바꿈을 기준으로)
+      //  let messageLines = msg.message.split("\n");
+
+      //  // 각 메시지마다 <p> 태그 생성
+      //  let p = document.createElement("p");
+
+      //  // <strong>로 이름과 시간 넣기
+      //  p.innerHTML = `<strong>${msg.name}</strong> (${msg.time})`;
+
+      //  // 메시지 각 줄을 <br>로 구분하여 넣기
+      //  messageLines.forEach(line => {
+      //    let lineP = document.createElement("p");
+      //    lineP.innerHTML = line; // 각 메시지 줄을 <p>로 감쌈
+      //    p.appendChild(lineP);
+      //  });
+
+      //  // 생성된 <p> 태그를 outputDiv에 추가
+      //  outputDiv.innerHTML = p;
+      //});
+    //}
+      }
+    parseText();
+  </script>
+
+</body>
+</html>
