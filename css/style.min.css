@@ -1,3 +1,9 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -8,6 +14,7 @@ body {
   display: flex;
   justify-content: center;
   margin: 0;
+  position: relative;
 }
 body .title {
   text-align: center;
@@ -24,32 +31,41 @@ body > section {
   padding: 16px;
   gap: 16px;
   height: 100%;
-  box-sizing: border-box;
 }
 body > section:nth-child(1) {
-  background-color: #F9DF03;
-  width: 460px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
 }
 body > section:nth-child(2) {
-  background-color: #808080;
-  width: 460px;
-  margin-left: 460px;
+  margin-left: 400px;
 }
-body > section:nth-child(3) {
-  background-color: #c95e5e;
-  width: calc(100% - 920px);
+body > section.typeArea {
+  display: flex;
+  flex-direction: column;
+  background-color: #F9DF03;
+  width: 400px;
 }
-body > section textarea {
+body > section.output {
+  box-sizing: content-box;
+  background-color: #ffffff;
+  width: 400px;
+}
+body > section.setting {
+  background-color: #ffffff;
+  width: calc(100% - 800px);
+}
+body textarea {
   display: flex;
   width: 100%;
-  box-sizing: border-box;
   border: 0;
   border-radius: 8px;
   padding: 16px;
   font-family: Arial, Helvetica, sans-serif;
   min-height: 80%;
 }
-body > section button {
+body button {
   height: calc(80% - 50px);
   border-radius: 8px;
   padding: 16px;
@@ -61,27 +77,18 @@ body > section button {
   will-change: transform;
   transition: all 0.3s;
 }
-body > section button:hover {
+body button:hover {
   transform: scale(0.95);
 }
 
-.typeArea {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-}
-
-.kakao {
+.output #output {
+  min-height: 50%;
   font-size: 14px;
-}
-.kakao #output {
   background-color: #B2C7D9;
   position: relative;
   border-radius: 8px;
   padding: 16px;
+  box-shadow: 0 0 20px #a9a9a9;
 }
 
 .name {
@@ -97,7 +104,7 @@ body > section button:hover {
   display: flex;
   width: 40px;
   height: 40px;
-  background: blue;
+  background: var(--color-before, blue) no-repeat center center/cover;
   border-radius: 16px;
   margin-top: -4px;
 }
@@ -171,4 +178,75 @@ body > section button:hover {
 #buttons {
   display: flex;
   gap: 8px;
+}
+
+label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+fieldset {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+[type=checkbox] {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  position: relative;
+  border: max(2px, 0.1em) solid gray;
+  border-radius: 1.25em;
+  width: 2.25em;
+  height: 1.25em;
+}
+
+[type=checkbox]::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  transform: scale(0.8);
+  background-color: gray;
+  transition: left 250ms linear;
+}
+
+[type=checkbox]:checked {
+  background-color: rebeccapurple;
+  border-color: rebeccapurple;
+}
+
+[type=checkbox]:checked::before {
+  background-color: white;
+  left: 1em;
+}
+
+[type=checkbox]:disabled {
+  border-color: lightgray;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+[type=checkbox]:disabled:before {
+  background-color: lightgray;
+}
+
+[type=checkbox]:disabled + span {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+[type=checkbox]:focus-visible {
+  outline-offset: max(2px, 0.1em);
+  outline: max(2px, 0.1em) solid tomato;
+}
+
+[type=checkbox]:enabled:hover {
+  box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
 }/*# sourceMappingURL=style.min.css.map */

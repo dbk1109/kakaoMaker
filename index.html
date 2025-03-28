@@ -12,20 +12,25 @@
       <h1>카톡 메이커</h1>
       <p>이것은 픽션 민원 카톡을 만들기 위하여 만들어진 페이지입니다.</p>
     </div>
-    <textarea name="text" id="inputText" onInput="this.parentNode.dataset.replicatedValue = this.value" placeholder="여기에 입력하세요"></textarea>
-
+    <textarea name="text" id="inputText" onInput="this.parentNode.dataset.replicatedValue = this.value" placeholder="여기에 입력하세요">
+</textarea>
+  
     <button onclick="parseText()">생성하기</button>
-
   </section>
-  <section class="kakao">
+
+  <section class="output">
     <div id="output"></div>
   </section>
 
   <section class="setting">
     <h2>오른쪽 말풍선 설정</h2>
     <div id="buttons"></div>
+    <h2>상대 프로필 사진 설정</h2>
+    <input type="file" name="profile" id="fileInput" accept="image/*" onclick="load()">
   </section>
-  
+
+
+
   <script>
 
     // textarea에서 텍스트 가져오기
@@ -35,12 +40,13 @@
     let settingArea = document.querySelector('.setting');
     let btnArea = settingArea.querySelector('#buttons');
     let btns = [];
+    let result = [];
 
     function parseText() {
       outputDiv.innerHTML = " ";
       let messages = document.getElementById("inputText").value.split('\n');
-
-      let result = [];
+      
+      result = [];
       let current = null;
 
       messages.forEach(msg => {
@@ -87,34 +93,48 @@
         outputDiv.appendChild(texts);
       });
 
-      result.forEach(el => {
-        btns.push(el.name)
-        btns = [...new Set(btns)];
-      })
-      btnArea.innerHTML = '';
-      btns.forEach(el => {
-        btnArea.innerHTML += `<button onClick="test(this)" value="${el}">${el}</button>`;
-      })
-      console.log(btns);
     }
     parseText();
 
-  </script>
+    result.forEach(el => {
+      btns.push(el.name)
+      btns = [...new Set(btns)];
+    })
+    btnArea.innerHTML = '';
+    btns.forEach(el => {
+      btnArea.innerHTML += `<button onClick="test(this)" value="${el}">${el}</button>`;
+    })
+    console.log(btns);
 
-  <script>
     function test(btn) {
       let names = document.querySelectorAll('.name');
-      let texts = document.querySelectorAll('.texts');
       names.forEach(el => {
         if (el.innerText === btn.value) {
           el.classList.add('right');
           el.nextSibling.classList.add('right');
         } else {
+          
+          document.getElementById('fileInput').addEventListener('change', function (event) {
+            const file = event.target.files[0]; // 사용자가 선택한 첫 번째 파일 가져오기
+
+            if (file) {
+              const reader = new FileReader();
+              reader.onload = function (e) {
+                el.style.setProperty("--color-before", `url('${e.target.result}')`);
+              };
+              reader.readAsDataURL(file);
+            }
+          });
           el.classList.remove('right');
           el.nextSibling.classList.remove('right');
         }
       })
+
+
     }
+
+
+    
   </script>
 
 </body>
