@@ -9,7 +9,7 @@
 <body>
   <section class="typeArea">
     <div class="title">
-      <h1>카톡 메이커</h1>
+      <h1>카톡 메이커 MVP 버전</h1>
       <p>이것은 픽션 민원 카톡을 만들기 위하여 만들어진 페이지입니다.</p>
     </div>
     <textarea name="text" id="inputText" onInput="this.parentNode.dataset.replicatedValue = this.value" placeholder="*아래 양식에 맞춰 작성해 보세요*
@@ -38,6 +38,20 @@
     <div id="buttons"></div>
     <h2>상대 프로필 사진 설정</h2>
     <input type="file" name="profile" id="fileInput" accept="image/*" onclick="load()">
+    <h2><br>안내</h2>
+    <ul>
+      <li>형식을 지키지 않으면 제대로 나오지 않습니다.</li>
+      <li>mvp 버전에서는 1:1 대화만 지원합니다.</li>
+      <li>업데이트 목록</li>
+      <ol>
+        <li> 이미지 내보내기 (저장)
+        <li> 메세지 삭제 표현 (왼쪽 텍스트에서 수정)</li>
+        <li> 배경색/이미지 변경 (v1)</li>
+        <li>멀티 그룹톡 (v2)</li>
+        - 각각 프로필 이미지 설정
+        </li>
+      </ol>
+    </ul>
   </section>
 
 
