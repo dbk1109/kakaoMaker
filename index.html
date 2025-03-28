@@ -12,8 +12,14 @@
       <h1>카톡 메이커</h1>
       <p>이것은 픽션 민원 카톡을 만들기 위하여 만들어진 페이지입니다.</p>
     </div>
-    <textarea name="text" id="inputText" onInput="this.parentNode.dataset.replicatedValue = this.value" placeholder="여기에 입력하세요">
-</textarea>
+    <textarea name="text" id="inputText" onInput="this.parentNode.dataset.replicatedValue = this.value" placeholder="*아래 양식에 맞춰 작성해 보세요*
+
+[이름1] 오전 00:00
+메세지1
+메세지2
+
+[이름2] 오후 00:04
+메세지1"></textarea>
   
     <button onclick="parseText()">생성하기</button>
   </section>
@@ -44,6 +50,8 @@
 
     function parseText() {
       outputDiv.innerHTML = " ";
+      btns = [];
+
       let messages = document.getElementById("inputText").value.split('\n');
       
       result = [];
@@ -85,26 +93,22 @@
           } else {
             texts.appendChild(p);
           }
+          btns.push(el.name)
+          btns = [...new Set(btns)];
         });
         
         name.classList += "name";
         texts.classList += "texts";
         outputDiv.appendChild(name);
         outputDiv.appendChild(texts);
+        
       });
 
+      btnArea.innerHTML = "";
+      btns.forEach(el => {
+        btnArea.innerHTML += `<button onClick="test(this)" value="${el}">${el}</button>`;
+      })
     }
-    parseText();
-
-    result.forEach(el => {
-      btns.push(el.name)
-      btns = [...new Set(btns)];
-    })
-    btnArea.innerHTML = '';
-    btns.forEach(el => {
-      btnArea.innerHTML += `<button onClick="test(this)" value="${el}">${el}</button>`;
-    })
-    console.log(btns);
 
     function test(btn) {
       let names = document.querySelectorAll('.name');
