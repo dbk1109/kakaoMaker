@@ -4,11 +4,16 @@
   }
 }
 
-$pdg: 16px;
+$pdg: 24px;
 $br: 8px;
 $pfSize: 40px;
 $leftWidth: 400px;
 $leftHeight: 80%;
+
+:root {
+  --kakaoColor: #F9DF03;
+  --white: #ffffff;
+}
 
 @mixin boxDetail($radius: $br, $padding: $pdg) {
   border-radius: $radius;
@@ -46,39 +51,13 @@ html, body {margin:0;padding:0;height:100%;}
 
 body {
   display: flex;
-  justify-content: center;
-  margin: 0;
   position: relative;
+  overflow: hidden;
   //@include mobile() {flex-direction: column;}
   .title {
     text-align: center;
     h1 {font-size: 20px;color: #633C14;}
     p {font-size: 14px; margin: 0;}
-  }
-  > section {
-    padding: $pdg;
-    gap: $pdg;
-    height: 100%;
-    //@include mobile {width: 100%;}
-    &:nth-child(1) {position: fixed; top:0;left:0;z-index:999;}
-    &:nth-child(2) {margin-left: $leftWidth; }
-
-    &.typeArea {
-      display: flex;
-      flex-direction: column;
-      background-color: #F9DF03; 
-      width: $leftWidth;
-    }
-    &.output {
-      //padding: 20px;
-      box-sizing: content-box;
-      background-color: #ffffff;
-      width: $leftWidth;
-    }
-    &.setting {
-      background-color: #ffffff;
-      width: calc(100% - ($leftWidth * 2));
-    }
   }
   textarea {
     display: flex;
@@ -89,96 +68,168 @@ body {
     min-height: $leftHeight;
   }
   button {
-    height: calc($leftHeight - 50px);
-    @include boxDetail();
     border: 0;
-    background-color: #633C14;
-    color: white;
+    @include boxDetail();
     cursor: pointer;
     position: relative;
     will-change: transform;
-    transition: all .3s;
+    transition: all 0.3s;
     &:hover {
       transform: scale(0.95);
     }
   }
-}
-
-
-.output {
-  #output {
-    min-height: 50%;
-    font-size: 14px;
-    background-color: #B2C7D9;
+  > section {
+    padding: $pdg;
+    height: 100%;
     position: relative;
-    @include boxDetail;
-    box-shadow: 0 0 20px #a9a9a9;
-  }
-  //&::before, &::after {
-  //  content: '';
-  //  display: block;
-  //}
-  //&::before {
-  //  background: red;
-  //  width: 100%;
-  //  height: 20px;
-  //  border-radius: 6px 6px 0 0;
-  //  //position: absolute; top: 0;left: 0;
-  //}
-}
-
-.name {
-  display: flex;
-  gap: 12px;
-  width: 100%;
-  &:not(:first-child){padding-top:24px;}
-  &:not(.right)::before{
-    content: '';
-    display: flex;
-    width: $pfSize; height: $pfSize;
-    background: var(--color-before, blue) no-repeat center center / cover;
-    border-radius: $pdg;
-    margin-top: -4px;
-  }
-  &.right {
-    color: transparent;
+    //gap: calc($br * 2);
+    //&:nth-child(1) {position: fixed; top:0;left:0;z-index:999;}
+    //&:nth-child(2) {margin-left: $leftWidth; }
   }
 }
 
-.texts {
+
+.typeArea {
   display: flex;
   flex-direction: column;
-  gap: $br;
-  margin-left: calc($pfSize + 12px);
-  margin-top: calc(4px - $pdg);
-  p {
-    background: white;
-    @include boxDetail(4px, 10px);
-    margin: 0;
-    width: max-content;
+  justify-content: space-between;
+  min-width: $leftWidth;
+  background-color: var(--kakaoColor);
+  z-index: 9;
+  position: fixed;
+  transform: translateX(-$leftWidth);
+  transition: all 0.3s;
+  &.open { 
+    transform: translateX(0); 
     position: relative;
-    z-index: 0;
-    &:first-child:not(.endLine)::before {
-      @include msgArrow(left);
-    }
   }
-  > div {
-    display: flex;
-    align-items: flex-end;
-    gap: $br;
-    span { font-size:12px;}
+  .handle {
+    $size: 32px;
+    position: absolute;
+    left: $leftWidth;
+    padding: 10px 5px 10px 10px;
+    border-radius: 0 $br $br 0;
+    background: var(--kakaoColor);
+    text-transform: uppercase;
+    cursor: pointer;
+    writing-mode: vertical-rl;
   }
-  &.right {
-    align-items: flex-end;
-    > div{flex-direction:row-reverse}
-    p:first-child::before { @include msgArrow('right')}
+  .btn__create {
+    background-color: #633C14;
+    color: white;
   }
 }
 
-#buttons {
-  display: flex;
-  gap: $br;
+
+.preview {
+  padding-left: 50px;
+  #output {
+    @include boxDetail();
+    min-width: $leftWidth;
+    min-height: 50%;
+    font-size: 14px;
+    background-color: var(--previewBackground, #B2C7D9);
+    position: relative;
+    box-shadow: 0 0 20px #a9a9a9;
+    //&::before, &::after {
+    //  content: '';
+    //  display: block;
+    //}
+    //&::before {
+    //  background: red;
+    //  width: 100%;
+    //  height: 20px;
+    //  border-radius: 6px 6px 0 0;
+    //  //position: absolute; top: 0;left: 0;
+    //}
+  }
+  .name {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 6px;
+    &:not(:first-child){padding-top:24px;}
+    &:not(.right)::before{
+      content: '';
+      display: flex;
+      width: $pfSize; height: $pfSize;
+      background: var(--color-before, blue) no-repeat center center / cover;
+      border-radius: $pdg;
+      margin-top: -4px;
+    }
+    &.right {
+      color: transparent;
+    }
+  }
+
+  .texts {
+    display: flex;
+    flex-direction: column;
+    gap: $br;
+    margin-left: calc($pfSize + 12px);
+    margin-top: calc(4px - $pdg);
+    p {
+      background: white;
+      @include boxDetail(4px, 10px);
+      margin: 0;
+      width: max-content;
+      position: relative;
+      z-index: 0;
+      &:first-child:not(.endLine)::before {
+        @include msgArrow(left);
+      }
+    }
+    > div {
+      display: flex;
+      align-items: flex-end;
+      gap: $br;
+      span { font-size:12px;}
+    }
+    &.right {
+      align-items: flex-end;
+      > div{flex-direction:row-reverse}
+      p:first-child::before { @include msgArrow('right')}
+    }
+  }
 }
+
+
+.setting {
+  background-color: var(--white);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: $pdg;
+  > * {border: 1px solid red;}
+  h2, h3 { margin: 10px 0;}
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: $br;
+    span {
+      font-size: 12px;
+      padding: 4px 8px;
+      background-color: var(--kakaoColor);
+      border-radius: 0 8px 8px 0;
+    }
+  }
+  #users {
+    display: flex;
+    flex-direction: column;
+    gap: $br;
+    img {
+      width: $pfSize; height: $pfSize;
+      aspect-ratio: 1 / 1;
+      border-radius: $pdg;
+    }
+  }
+
+}
+
+
+
+
+
 
 label {
   display: inline-flex;

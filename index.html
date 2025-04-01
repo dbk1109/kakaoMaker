@@ -7,65 +7,86 @@
   <title>Document</title>
 </head>
 <body>
-  <section class="typeArea">
+  <section class="typeArea foldable open">
+    <div class="handle">close </div>
     <div class="title">
-      <h1>카톡 메이커 MVP 버전</h1>
-      <p>이것은 픽션 민원 카톡을 만들기 위하여 만들어진 페이지입니다.</p>
+      <h1>카톡 메이커 (MVP v1)</h1>
+      <p>이것은 픽션 카톡을 만들기 위하여 만들어진 페이지입니다.</p>
     </div>
     <textarea name="text" id="inputText" onInput="this.parentNode.dataset.replicatedValue = this.value" placeholder="*아래 양식에 맞춰 작성해 보세요*
-
-[이름1] 오전 00:00
-메세지1
-메세지2
-
-[이름2] 오후 00:04
-메세지1">[이름1] 오전 00:00
-메세지1
-메세지2
-
-[이름2] 오후 00:04
-메세지1</textarea>
+"></textarea>
   
-    <button onclick="parseText()">생성하기</button>
+    <button class="btn__create" onclick="parseText()">생성하기</button>
   </section>
 
-  <section class="output">
-    <div id="output"></div>
+  <section class="preview">
+    <div id="output">
+      <h2><br>안내</h2>
+      <ul>
+        <li>형식을 지키지 않으면 제대로 나오지 않습니다.</li>
+        <li>mvp 버전에서는 1:1 대화만 지원합니다.</li>
+        <li>업데이트 목록</li>
+        <ol>
+          <li> 이미지 내보내기 (저장)
+          <li> 메세지 삭제 표현 (왼쪽 텍스트에서 수정)</li>
+          <li> 배경색/이미지 변경 (v1)</li>
+          <li>멀티 그룹톡 (v2)</li>
+          - 각각 프로필 이미지 설정
+          </li>
+        </ol>
+      </ul>
+      <div class="name">이름1</div>
+      <div class="texts">
+        <p>메세지1</p>
+        <div>
+          <p class="endLine">메세지2</p><span>오전 00:00</span>
+        </div>
+      </div>
+      <div class="name">이름2</div>
+      <div class="texts">
+        <div>
+          <p>메세지1</p><span>오후 00:04</span>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="setting">
-    <h2>오른쪽 말풍선 설정</h2>
-    <div id="buttons"></div>
+    <div class="nameSelect">
+      <h2> <span>Step 1</span> 유저 선택</h2>
+      <div id="users">
+        <div>
+          <h3>이름1</h3>
+          <img src="" alt="`${name} 이미지`">
+          <input type="file" name="profile" class="profileInput" accept="image/*" onclick="imgChange('이름1')">
+          <!--<button onclick="test(this)" value="이름1">이름1</button>-->
+        </div>
+      </div>
+    </div>
     <h2>상대 프로필 사진 설정</h2>
-    <input type="file" name="profile" id="fileInput" accept="image/*" onclick="load()">
-    <h2><br>안내</h2>
-    <ul>
-      <li>형식을 지키지 않으면 제대로 나오지 않습니다.</li>
-      <li>mvp 버전에서는 1:1 대화만 지원합니다.</li>
-      <li>업데이트 목록</li>
-      <ol>
-        <li> 이미지 내보내기 (저장)
-        <li> 메세지 삭제 표현 (왼쪽 텍스트에서 수정)</li>
-        <li> 배경색/이미지 변경 (v1)</li>
-        <li>멀티 그룹톡 (v2)</li>
-        - 각각 프로필 이미지 설정
-        </li>
-      </ol>
-    </ul>
+    <input type="file" name="profile" class="profileInput" accept="image/*" onclick="load()">
+
   </section>
 
 
+  <script>
+    let foldable = document.querySelector('.foldable');
+    let handle = foldable.querySelector('.handle');
+
+    handle.addEventListener('click', function (){ 
+      foldable.classList.toggle('open');
+      (foldable.classList.contains('open')) ? handle.innerText='close' : handle.innerText='open'}
+    )
+  </script>
 
   <script>
 
     // textarea에서 텍스트 가져오기
     let outputDiv = document.getElementById("output");
-
-    
-    let settingArea = document.querySelector('.setting');
-    let btnArea = settingArea.querySelector('#buttons');
-    let btns = [];
+    let btnArea = document.querySelector('.setting #users');
     let result = [];
+    let nameList = [];
+    let PROFILES = document.querySelectorAll('.profileInput');
 
     function parseText() {
       outputDiv.innerHTML = " ";
@@ -93,41 +114,53 @@
       if (current) result.push(current);
       
       result.forEach(el => {
-        let name = document.createElement("div");
-        let texts = document.createElement("div");
-        let time = document.createElement("span");
 
-        name.innerText = el.name;
+        let names = document.createElement("div");
+        let texts = document.createElement("div");
+        let time = document.createElement("span");        
+
+        names.innerText = el.name;
 
         el.messages.forEach((msg, i)=> {
           let p = document.createElement("p");
           let cover = document.createElement('div');
           p.innerText = msg;
           if (i === el.messages.length - 1) { // 마지막거라면
-            time.innerHTML = el.time;
-            cover.appendChild(p);
-            cover.appendChild(time);
-            texts.appendChild(cover);
-            if (el.messages.length >1 ){ p.classList +="endLine";}
+              time.innerHTML = el.time;
+              cover.appendChild(p);
+              cover.appendChild(time);
+              texts.appendChild(cover);
+              if (el.messages.length >1 ){ p.classList +="endLine";};
           } else {
-            texts.appendChild(p);
+              texts.appendChild(p);
           }
-          btns.push(el.name)
-          btns = [...new Set(btns)];
         });
         
-        name.classList += "name";
+        names.classList += "name";
         texts.classList += "texts";
-        outputDiv.appendChild(name);
+        outputDiv.appendChild(names);
         outputDiv.appendChild(texts);
         
+        nameList.push(el.name);
       });
 
       btnArea.innerHTML = "";
-      btns.forEach(el => {
-        btnArea.innerHTML += `<button onClick="test(this)" value="${el}">${el}</button>`;
+      const uniqueNames = [...new Set(result.map(item => item.name))];
+      uniqueNames.forEach(el => {
+        //result = [...new Set(result[1])];
+        btnArea.innerHTML += `
+        <div>
+          <h3>${el}</h3>
+          <img src=".jpeg" alt="${el} 이미지">
+          <input type="file" name="profile" class="profileInput" accept="image/*" onclick="imgChange('${el}')">
+          <!--<button onclick="test(this)" value="이름1">이름1</button>-->
+        </div>
+        <button onClick="test(this)" value="${el}">${el}</button>
+        `;
       })
     }
+
+  parseText();
 
     function test(btn) {
       let names = document.querySelectorAll('.name');
@@ -136,27 +169,35 @@
           el.classList.add('right');
           el.nextSibling.classList.add('right');
         } else {
-          
-          document.getElementById('fileInput').addEventListener('change', function (event) {
-            const file = event.target.files[0]; // 사용자가 선택한 첫 번째 파일 가져오기
-
-            if (file) {
-              const reader = new FileReader();
-              reader.onload = function (e) {
-                el.style.setProperty("--color-before", `url('${e.target.result}')`);
-              };
-              reader.readAsDataURL(file);
-            }
-          });
           el.classList.remove('right');
           el.nextSibling.classList.remove('right');
         }
       })
-
-
+      imgChange(btn);
+    }
+    
+    function imgChange(targetName) {
+      PROFILES = document.querySelectorAll('.profileInput');
+      console.log(PROFILES);
     }
 
+    PROFILES.forEach(el => {
 
+      el.addEventListener('change', function (event) {
+        const file = event.target.files[0]; // 사용자가 선택한 첫 번째 파일 가져오기
+
+        console.log(PROFILES[0], el);
+
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            el.style.setProperty("--color-before", `url('${e.target.result}')`);
+          };
+          reader.readAsDataURL(file);
+        }
+
+      });
+    });
     
   </script>
 

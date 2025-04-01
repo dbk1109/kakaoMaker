@@ -1,3 +1,8 @@
+:root {
+  --kakaoColor: #F9DF03;
+  --white: #ffffff;
+}
+
 *,
 *::before,
 *::after {
@@ -12,9 +17,8 @@ html, body {
 
 body {
   display: flex;
-  justify-content: center;
-  margin: 0;
   position: relative;
+  overflow: hidden;
 }
 body .title {
   text-align: center;
@@ -27,51 +31,19 @@ body .title p {
   font-size: 14px;
   margin: 0;
 }
-body > section {
-  padding: 16px;
-  gap: 16px;
-  height: 100%;
-}
-body > section:nth-child(1) {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 999;
-}
-body > section:nth-child(2) {
-  margin-left: 400px;
-}
-body > section.typeArea {
-  display: flex;
-  flex-direction: column;
-  background-color: #F9DF03;
-  width: 400px;
-}
-body > section.output {
-  box-sizing: content-box;
-  background-color: #ffffff;
-  width: 400px;
-}
-body > section.setting {
-  background-color: #ffffff;
-  width: calc(100% - 800px);
-}
 body textarea {
   display: flex;
   width: 100%;
   border: 0;
   border-radius: 8px;
-  padding: 16px;
+  padding: 24px;
   font-family: Arial, Helvetica, sans-serif;
   min-height: 80%;
 }
 body button {
-  height: calc(80% - 50px);
-  border-radius: 8px;
-  padding: 16px;
   border: 0;
-  background-color: #633C14;
-  color: white;
+  border-radius: 8px;
+  padding: 24px;
   cursor: pointer;
   position: relative;
   will-change: transform;
@@ -80,46 +52,84 @@ body button {
 body button:hover {
   transform: scale(0.95);
 }
-
-.output #output {
-  min-height: 50%;
-  font-size: 14px;
-  background-color: #B2C7D9;
+body > section {
+  padding: 24px;
+  height: 100%;
   position: relative;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 0 20px #a9a9a9;
 }
 
-.name {
+.typeArea {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 400px;
+  background-color: var(--kakaoColor);
+  z-index: 9;
+  position: fixed;
+  transform: translateX(-400px);
+  transition: all 0.3s;
+}
+.typeArea.open {
+  transform: translateX(0);
+  position: relative;
+}
+.typeArea .handle {
+  position: absolute;
+  left: 400px;
+  padding: 10px 5px 10px 10px;
+  border-radius: 0 8px 8px 0;
+  background: var(--kakaoColor);
+  text-transform: uppercase;
+  cursor: pointer;
+  writing-mode: vertical-rl;
+}
+.typeArea .btn__create {
+  background-color: #633C14;
+  color: white;
+}
+
+.preview {
+  padding-left: 50px;
+}
+.preview #output {
+  border-radius: 8px;
+  padding: 24px;
+  min-width: 400px;
+  min-height: 50%;
+  font-size: 14px;
+  background-color: var(--previewBackground, #B2C7D9);
+  position: relative;
+  box-shadow: 0 0 20px #a9a9a9;
+}
+.preview .name {
   display: flex;
   gap: 12px;
   width: 100%;
+  margin-bottom: 6px;
 }
-.name:not(:first-child) {
+.preview .name:not(:first-child) {
   padding-top: 24px;
 }
-.name:not(.right)::before {
+.preview .name:not(.right)::before {
   content: "";
   display: flex;
   width: 40px;
   height: 40px;
   background: var(--color-before, blue) no-repeat center center/cover;
-  border-radius: 16px;
+  border-radius: 24px;
   margin-top: -4px;
 }
-.name.right {
+.preview .name.right {
   color: transparent;
 }
-
-.texts {
+.preview .texts {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-left: 52px;
-  margin-top: -12px;
+  margin-top: -20px;
 }
-.texts p {
+.preview .texts p {
   background: white;
   border-radius: 4px;
   padding: 10px;
@@ -129,7 +139,7 @@ body button:hover {
   position: relative;
   z-index: 0;
 }
-.texts p:first-child:not(.endLine)::before {
+.preview .texts p:first-child:not(.endLine)::before {
   content: "";
   display: block;
   width: 0;
@@ -144,21 +154,21 @@ body button:hover {
   top: 6px;
   z-index: -1;
 }
-.texts > div {
+.preview .texts > div {
   display: flex;
   align-items: flex-end;
   gap: 8px;
 }
-.texts > div span {
+.preview .texts > div span {
   font-size: 12px;
 }
-.texts.right {
+.preview .texts.right {
   align-items: flex-end;
 }
-.texts.right > div {
+.preview .texts.right > div {
   flex-direction: row-reverse;
 }
-.texts.right p:first-child::before {
+.preview .texts.right p:first-child::before {
   content: "";
   display: block;
   width: 0;
@@ -175,9 +185,40 @@ body button:hover {
   z-index: -1;
 }
 
-#buttons {
+.setting {
+  background-color: var(--white);
+  width: 100%;
   display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.setting > * {
+  border: 1px solid red;
+}
+.setting h2, .setting h3 {
+  margin: 10px 0;
+}
+.setting h2 {
+  display: flex;
+  align-items: center;
   gap: 8px;
+}
+.setting h2 span {
+  font-size: 12px;
+  padding: 4px 8px;
+  background-color: var(--kakaoColor);
+  border-radius: 0 8px 8px 0;
+}
+.setting #users {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.setting #users img {
+  width: 40px;
+  height: 40px;
+  aspect-ratio: 1/1;
+  border-radius: 24px;
 }
 
 label {
