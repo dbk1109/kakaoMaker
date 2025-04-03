@@ -114,10 +114,6 @@ body {
     cursor: pointer;
     writing-mode: vertical-rl;
   }
-  .btn__create {
-    background-color: #633C14;
-    color: white;
-  }
 }
 
 
@@ -153,7 +149,7 @@ body {
       content: '';
       display: flex;
       width: $pfSize; height: $pfSize;
-      background: var(--color-before, blue) no-repeat center center / cover;
+      background: var(--color-before, var(--kakaoColor)) no-repeat center center / cover;
       border-radius: $pdg;
       margin-top: -4px;
     }
@@ -200,11 +196,11 @@ body {
   display: flex;
   flex-direction: column;
   gap: $pdg;
-  > * {border: 1px solid red;}
-  h2, h3 { margin: 10px 0;}
+  //> * {border: 1px solid red;}
   h2 {
     display: flex;
     align-items: center;
+    margin: 10px 0;
     gap: $br;
     span {
       font-size: 12px;
@@ -213,88 +209,141 @@ body {
       border-radius: 0 8px 8px 0;
     }
   }
-  #users {
+  img {
+    $pfSize: $pfSize * 2;
+    width: $pfSize; height: $pfSize;
+    min-width: $pfSize; min-height: $pfSize;
+    max-width: $pfSize; max-height: $pfSize;
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background: var(--color-before, var(--kakaoColor)) no-repeat center center / cover;
+  }
+  input[type=file],input[type="radio"]{
+    display: none;
+  }
+  input[type="radio"]:checked + label {
+    //background-color: red;
+  }
+}
+#users {
+  display: flex;
+  gap: $br;
+  > * { gap: $br;}
+  //> * { border: 1px solid;}
+  label {
     display: flex;
     flex-direction: column;
-    gap: $br;
-    img {
-      width: $pfSize; height: $pfSize;
-      aspect-ratio: 1 / 1;
-      border-radius: $pdg;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    font-size: 14px;
+    padding: 0;
+    transition: all 0.2s;
+    cursor: pointer;
+    &:hover {
+      transform: scale(0.95);
     }
+    //&::before {
+    //  content: '+';
+    //  width: 100%; height: 100%;
+    //  color: var(--white);
+    //  background: rgba(0,0,0,.3);
+    //  position: absolute;
+    //  z-index: 999;
+    //}
   }
+}
+.users {
+  &--left {
+    display: flex;
+    //flex-direction: column;
+    align-items: center;
+  }
+  &--right {
+    width: 100%;
+    h3 {margin: 0 0 $br 0;}
+  }
+}
 
+
+.btn {
+  &__create {
+    background-color: #633C14;
+    color: white;
+  }
+  &__makeMe {
+    padding: 5px;
+    margin-left: 8px;
+  }
 }
 
 
 
+//label {
+//  display: inline-flex;
+//  align-items: center;
+//  gap: 0.5rem;
+//}
 
+//fieldset {
+//  border: none;
+//  display: flex;
+//  flex-direction: column;
+//  gap: 0.5rem;
+//}
+//[type="checkbox"] {
+//  appearance: none;
+//  position: relative;
+//  border: max(2px, 0.1em) solid gray;
+//  border-radius: 1.25em;
+//  width: 2.25em;
+//  height: 1.25em;
+//}
 
+//[type="checkbox"]::before {
+//  content: "";
+//  position: absolute;
+//  left: 0;
+//  width: 1em;
+//  height: 1em;
+//  border-radius: 50%;
+//  transform: scale(0.8);
+//  background-color: gray;
+//  transition: left 250ms linear;
+//}
 
-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-}
+//[type="checkbox"]:checked {
+//  background-color: rebeccapurple;
+//  border-color: rebeccapurple;
+//}
 
-fieldset {
-  border: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-[type="checkbox"] {
-  appearance: none;
-  position: relative;
-  border: max(2px, 0.1em) solid gray;
-  border-radius: 1.25em;
-  width: 2.25em;
-  height: 1.25em;
-}
+//[type="checkbox"]:checked::before {
+//  background-color: white;
+//  left: 1em;
+//}
 
-[type="checkbox"]::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  width: 1em;
-  height: 1em;
-  border-radius: 50%;
-  transform: scale(0.8);
-  background-color: gray;
-  transition: left 250ms linear;
-}
+//[type="checkbox"]:disabled {
+//  border-color: lightgray;
+//  opacity: 0.7;
+//  cursor: not-allowed;
+//}
 
-[type="checkbox"]:checked {
-  background-color: rebeccapurple;
-  border-color: rebeccapurple;
-}
+//[type="checkbox"]:disabled:before {
+//  background-color: lightgray;
+//}
 
-[type="checkbox"]:checked::before {
-  background-color: white;
-  left: 1em;
-}
+//[type="checkbox"]:disabled + span {
+//  opacity: 0.7;
+//  cursor: not-allowed;
+//}
 
-[type="checkbox"]:disabled {
-  border-color: lightgray;
-  opacity: 0.7;
-  cursor: not-allowed;
-}
+//[type="checkbox"]:focus-visible {
+//  outline-offset: max(2px, 0.1em);
+//  outline: max(2px, 0.1em) solid tomato;
+//}
 
-[type="checkbox"]:disabled:before {
-  background-color: lightgray;
-}
-
-[type="checkbox"]:disabled + span {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-[type="checkbox"]:focus-visible {
-  outline-offset: max(2px, 0.1em);
-  outline: max(2px, 0.1em) solid tomato;
-}
-
-[type="checkbox"]:enabled:hover {
-  box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
-}
+//[type="checkbox"]:enabled:hover {
+//  box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+//}

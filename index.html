@@ -10,11 +10,36 @@
   <section class="typeArea foldable open">
     <div class="handle">close </div>
     <div class="title">
-      <h1>카톡 메이커 (MVP v1)</h1>
+      <h1>카톡 메이커 (v2)</h1>
       <p>이것은 픽션 카톡을 만들기 위하여 만들어진 페이지입니다.</p>
     </div>
     <textarea name="text" id="inputText" onInput="this.parentNode.dataset.replicatedValue = this.value" placeholder="*아래 양식에 맞춰 작성해 보세요*
-"></textarea>
+[민규] 오후2:20
+야 뭐하냐?
+같이 밥먹자
+야 뭐하냐니까?
+
+[원우] 오후2:20
+나랑 뭐 하고싶은거냐 너.
+
+[민규] 오후2:21
+뭐가
+
+[원우] 오후2:20
+하. 말을 말자.
+
+[쿱스] 오후2:30
+너네 뭐하냐..?">[이름1] 오전 1:00
+메세지
+메세지메세지
+
+[이름2] 오후 2:00
+메세지메세지메세지
+메세지메세지
+메세지
+
+[이름2] 오후 2:02
+새벽 메세지</textarea>
   
     <button class="btn__create" onclick="parseText()">생성하기</button>
   </section>
@@ -52,17 +77,21 @@
   </section>
 
   <section class="setting">
-    <div class="nameSelect">
+    <div class="step1">
       <h2> <span>Step 1</span> 유저 선택</h2>
       <div id="users">
-        <div>
-          <h3>이름1</h3>
-          <img src="" alt="`${name} 이미지`">
-          <input type="file" name="profile" class="profileInput" accept="image/*" onclick="imgChange('이름1')">
-          <!--<button onclick="test(this)" value="이름1">이름1</button>-->
-        </div>
+        <input type="radio" name="user__select" id="user0" class="user__select"><label for="user0"><p>선택안함</p></label>
+        <input type="radio" name="user__select" id="user1" class="user__select"><label for="user1"><img src="sample.jpeg" alt="`${name} 이미지`" class="profileImg"></label>
+        <input type="radio" name="user__select" id="user2" class="user__select"><label for="user2">2 click</label>
       </div>
     </div>
+    <div class="step2">
+      <h2> <span>Step 2</span> 유저 디테일 변경</h2>
+      <div id="details">
+        
+      </div>
+    </div>
+
     <h2>상대 프로필 사진 설정</h2>
     <input type="file" name="profile" class="profileInput" accept="image/*" onclick="load()">
 
@@ -82,10 +111,13 @@
   <script>
 
     // textarea에서 텍스트 가져오기
+    const SETTING = document.querySelector('.setting');
     let outputDiv = document.getElementById("output");
-    let btnArea = document.querySelector('.setting #users');
+    let btnArea = SETTING.querySelector('#users');
+    let detailArea = SETTING.querySelector('#details');
     let result = [];
     let nameList = [];
+    let uniqueNames = [];
     let PROFILES = document.querySelectorAll('.profileInput');
 
     function parseText() {
@@ -136,32 +168,19 @@
           }
         });
         
-        names.classList += "name";
+        names.classList += `name ${el.name}`;
         texts.classList += "texts";
         outputDiv.appendChild(names);
         outputDiv.appendChild(texts);
         
         nameList.push(el.name);
+        userSelect();
       });
-
-      btnArea.innerHTML = "";
-      const uniqueNames = [...new Set(result.map(item => item.name))];
-      uniqueNames.forEach(el => {
-        //result = [...new Set(result[1])];
-        btnArea.innerHTML += `
-        <div>
-          <h3>${el}</h3>
-          <img src=".jpeg" alt="${el} 이미지">
-          <input type="file" name="profile" class="profileInput" accept="image/*" onclick="imgChange('${el}')">
-          <!--<button onclick="test(this)" value="이름1">이름1</button>-->
-        </div>
-        <button onClick="test(this)" value="${el}">${el}</button>
-        `;
-      })
     }
 
   parseText();
 
+  /// 말하는사람 체크
     function test(btn) {
       let names = document.querySelectorAll('.name');
       names.forEach(el => {
@@ -177,29 +196,85 @@
     }
     
     function imgChange(targetName) {
-      PROFILES = document.querySelectorAll('.profileInput');
-      console.log(PROFILES);
+      console.log("imgChange Clicked");
+      PROFILES = document.querySelectorAll(`.${targetName}`);
+      let PROFILE = document.querySelector('#profile');
+      console.log("test", targetName, PROFILES);
+
+      PROFILE.addEventListener('change', function (event) {
+        const file = event.target.files[0]; // 사용자가 선택한 첫 번째 파일 가져오기
+        console.log(file);
+        PROFILES.forEach(el => {
+          console.log("el", el);
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              el.style.setProperty("--color-before", `url('${e.target.result}')`);
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      });
+    }
+    
+    function userSelect() {
+      uniqueNames = [...new Set(result.map(item => item.name))];
+      btnArea.innerHTML = `<input type="radio" name="user__select" id="userN" class="user__select"><label for="userN"><p>선택안함</p></label>`;
+      uniqueNames.forEach((el, i) => {
+        //result = [...new Set(result[1])];
+        btnArea.innerHTML += `
+          <input type="radio" name="user__select" id="user${i}" class="user__select" onclick="userDetail('${el}')">
+          <label for="user${i}">
+            <img src="" class="profileImg ${el}">
+            ${el}
+          </label>
+        `;
+      })
     }
 
-    PROFILES.forEach(el => {
-
-      el.addEventListener('change', function (event) {
-        const file = event.target.files[0]; // 사용자가 선택한 첫 번째 파일 가져오기
-
-        console.log(PROFILES[0], el);
-
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            el.style.setProperty("--color-before", `url('${e.target.result}')`);
-          };
-          reader.readAsDataURL(file);
-        }
-
+    function userDetail(user) {
+      let selectUser = document.querySelectorAll(`.${user}`);
+      //console.log(selectUser);
+      uniqueNames.forEach((el, i) => {
+        detailArea.innerHTML = `
+          <div class="users--left">
+            <h3>${user}</h3>
+            <button onclick="test(this)" value="${user}" class="btn__makeMe">'나'로 설정하기</button>
+          </div>
+          <div class="users--right">
+            <label for="profile">
+              이미지 변경
+            </label>
+            <input type="file" name="profile" id="profile" class="profileInput" accept="image/*" onclick="imgChange('${user}')">
+          </div>
+        `;
       });
-    });
-    
+    }
   </script>
 
 </body>
 </html>
+<!--
+<div>
+  <h3>${el}</h3>
+  <img src="sample.jpeg" alt="${el} profile">
+  <input type="file" name="profile" class="profileInput" accept="image/*" onclick="imgChange('${el}')">
+  <button onclick="test(this)" value="이름1">이름1</button>
+</div>
+<button onClick="test(this)" value="${el}">${el}</button>
+
+
+      <div class="users--left">
+        <h3>민규</h3>어쩌구 저쩌구
+        
+      </div>
+      <div class="users--right">
+        <label for="profile">
+          <img src=".jpeg" alt="`${name} 이미지`" class="profileImg">
+          이미지 변경
+        </label>
+        <input type="file" name="profile" id="profile" class="profileInput" accept="image/*" onclick="imgChange('이름1')">
+        <button onclick="test(this)" value="이름1">이름1</button>
+      </div>
+
+-->

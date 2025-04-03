@@ -83,10 +83,6 @@ body > section {
   cursor: pointer;
   writing-mode: vertical-rl;
 }
-.typeArea .btn__create {
-  background-color: #633C14;
-  color: white;
-}
 
 .preview {
   padding-left: 50px;
@@ -115,7 +111,7 @@ body > section {
   display: flex;
   width: 40px;
   height: 40px;
-  background: var(--color-before, blue) no-repeat center center/cover;
+  background: var(--color-before, var(--kakaoColor)) no-repeat center center/cover;
   border-radius: 24px;
   margin-top: -4px;
 }
@@ -192,15 +188,10 @@ body > section {
   flex-direction: column;
   gap: 24px;
 }
-.setting > * {
-  border: 1px solid red;
-}
-.setting h2, .setting h3 {
-  margin: 10px 0;
-}
 .setting h2 {
   display: flex;
   align-items: center;
+  margin: 10px 0;
   gap: 8px;
 }
 .setting h2 span {
@@ -209,85 +200,61 @@ body > section {
   background-color: var(--kakaoColor);
   border-radius: 0 8px 8px 0;
 }
-.setting #users {
+.setting img {
+  width: 80px;
+  height: 80px;
+  min-width: 80px;
+  min-height: 80px;
+  max-width: 80px;
+  max-height: 80px;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  -o-object-fit: cover;
+     object-fit: cover;
+  background: var(--color-before, var(--kakaoColor)) no-repeat center center/cover;
+}
+.setting input[type=file], .setting input[type=radio] {
+  display: none;
+}
+#users {
   display: flex;
-  flex-direction: column;
   gap: 8px;
 }
-.setting #users img {
-  width: 40px;
-  height: 40px;
-  aspect-ratio: 1/1;
-  border-radius: 24px;
+#users > * {
+  gap: 8px;
 }
-
-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-}
-
-fieldset {
-  border: none;
+#users label {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-}
-
-[type=checkbox] {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  justify-content: center;
+  align-items: center;
   position: relative;
-  border: max(2px, 0.1em) solid gray;
-  border-radius: 1.25em;
-  width: 2.25em;
-  height: 1.25em;
+  overflow: hidden;
+  font-size: 14px;
+  padding: 0;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+#users label:hover {
+  transform: scale(0.95);
 }
 
-[type=checkbox]::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  width: 1em;
-  height: 1em;
-  border-radius: 50%;
-  transform: scale(0.8);
-  background-color: gray;
-  transition: left 250ms linear;
+.users--left {
+  display: flex;
+  align-items: center;
+}
+.users--right {
+  width: 100%;
+}
+.users--right h3 {
+  margin: 0 0 8px 0;
 }
 
-[type=checkbox]:checked {
-  background-color: rebeccapurple;
-  border-color: rebeccapurple;
+.btn__create {
+  background-color: #633C14;
+  color: white;
 }
-
-[type=checkbox]:checked::before {
-  background-color: white;
-  left: 1em;
-}
-
-[type=checkbox]:disabled {
-  border-color: lightgray;
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-[type=checkbox]:disabled:before {
-  background-color: lightgray;
-}
-
-[type=checkbox]:disabled + span {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-[type=checkbox]:focus-visible {
-  outline-offset: max(2px, 0.1em);
-  outline: max(2px, 0.1em) solid tomato;
-}
-
-[type=checkbox]:enabled:hover {
-  box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+.btn__makeMe {
+  padding: 5px;
+  margin-left: 8px;
 }/*# sourceMappingURL=style.min.css.map */
