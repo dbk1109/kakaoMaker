@@ -63,7 +63,7 @@ body {
     display: flex;
     width: 100%;
     border: 0;
-    @include boxDetail;
+    @include boxDetail();
     font-family: Arial, Helvetica, sans-serif;
     min-height: $leftHeight;
   }
@@ -93,6 +93,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: $br;
   min-width: $leftWidth;
   background-color: var(--kakaoColor);
   z-index: 9;
