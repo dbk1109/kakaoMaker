@@ -227,6 +227,14 @@ body {
     //background-color: red;
   }
 }
+
+
+#basic {
+  input[type=checkbox] {
+    width: 20px; height: 20px;
+  }
+}
+
 #users {
   display: flex;
   gap: $br;
@@ -268,7 +276,6 @@ body {
   }
 }
 
-
 .btn {
   &__create {
     background-color: #633C14;
@@ -279,7 +286,6 @@ body {
     margin-left: 8px;
   }
 }
-
 
 
 //label {

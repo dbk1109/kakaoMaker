@@ -217,6 +217,11 @@ body > section {
 .setting input[type=file], .setting input[type=radio] {
   display: none;
 }
+#basic input[type=checkbox] {
+  width: 20px;
+  height: 20px;
+}
+
 #users {
   display: flex;
   gap: 8px;

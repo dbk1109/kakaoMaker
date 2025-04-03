@@ -74,15 +74,21 @@
 
   <section class="setting">
     <div class="step1">
-      <h2> <span>Step 1</span> 유저 선택</h2>
-      <div id="users"> </div>
+      <h2> <span>Step 1</span> 카톡 셋팅</h2>
+      <div id="basic">
+        <input type="checkbox" name="isTitle" id="isTitle">
+        <label for="isTitle">타이틀 추가</label>
+        <input type="checkbox" name="isDelete" id="isDelete">
+        <label for="isDelete">삭제마크 추가</label>
+      </div>
     </div>
     <div class="step2">
-      <h2> <span>Step 2</span> 유저 디테일 변경</h2>
-      <div id="details"> </div>
+      <h2> <span>Step 2</span> 유저 선택</h2>
+      <div id="users"> </div>
     </div>
     <div class="step3">
       <h2> <span>Step 3</span> 유저 디테일 변경</h2>
+      <div id="details"> </div>
     </div>
 
   </section>
@@ -217,6 +223,7 @@
           <label for="user${i}">
             <img src="" class="profileImg ${el}">
             ${el}
+            <button onclick="test(this)" value="${el}" class="btn__makeMe">'나'로 설정하기</button>
           </label>
         `;
       })
@@ -229,7 +236,6 @@
         detailArea.innerHTML = `
           <div class="users--left">
             <h3>${user}</h3>
-            <button onclick="test(this)" value="${user}" class="btn__makeMe">'나'로 설정하기</button>
           </div>
           <div class="users--right">
             <label for="profile">
