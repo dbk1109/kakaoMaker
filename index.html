@@ -87,7 +87,7 @@
       </div>
     </div>
     <div class="step2">
-      <h2> <span>Step 2</span> 유저 선택</h2>
+      <h2> <span>Step 2</span> 유저 설정</h2>
       <div id="users"> </div>
     </div>
     <div class="step3">
@@ -178,15 +178,16 @@
         outputDiv.appendChild(texts);
         
         nameList.push(el.name);
-        userSelect();
+        userMaker();
       });
     }
 
-  //parseText();
+  parseText();
 
   /// 말하는사람 체크
     function test(btn) {
       let names = document.querySelectorAll('.name');
+      console.log("test", names);
       names.forEach(el => {
         if (el.innerText === btn.value) {
           el.classList.add('right');
@@ -196,14 +197,14 @@
           el.nextSibling.classList.remove('right');
         }
       })
+      btn = btn.value;
       imgChange(btn);
     }
     
     function imgChange(targetName) {
-      console.log("imgChange Clicked");
+      console.log("imgChange", targetName, PROFILES);
+      let PROFILE = document.querySelector(`#profile_${targetName}`);
       PROFILES = document.querySelectorAll(`.${targetName} img`);
-      let PROFILE = document.querySelector('#profile');
-      console.log("test", targetName, PROFILES);
 
       PROFILE.addEventListener('change', function (event) {
         const file = event.target.files[0]; // 사용자가 선택한 첫 번째 파일 가져오기
@@ -224,22 +225,32 @@
       });
     }
     
-    function userSelect() {
+    function userMaker() {
       uniqueNames = [...new Set(result.map(item => item.name))];
-      btnArea.innerHTML = `<input type="radio" name="user__select" id="userN" class="user__select"><label for="userN"><p>선택안함</p></label>`;
+      btnArea.innerHTML = '';
+      //btnArea.innerHTML = `<input type="radio" name="user__select" id="userN" class="user__select"><label for="userN"><p>선택안함</p></label>`;
       uniqueNames.forEach((el, i) => {
         //result = [...new Set(result[1])];
         btnArea.innerHTML += `
-          <input type="radio" name="user__select" id="user${i}" class="user__select" onclick="userDetail('${el}')">
-          <label for="user${i}" class="${el}">
-            <img src="sample.jpg" class="profileImg">
-            ${el}
-            <button onclick="test(this)" value="${el}" class="btn__makeMe">'나'로 설정하기</button>
-          </label>
+        <div class="user">
+          <div class="users--left">
+            <label for="user${i}" class="${el}">
+              <input type="radio" name="btn__makeMe" id="btn__makeMe" value="${el}" class="btn__makeMe" onchange="test(this)">
+              <img src="sample.jpg" class="profileImg">
+              <h3>${el}</h3>
+              <input type="text" name="test" id="test" value="${el}" disabled>
+            </label>
+          </div>
+          <div class="users--right">
+            <label for="profile_${el}">이미지 변경</label>
+            <input type="file" name="profile" id="profile_${el}" class="profileInput" accept="image/*" onclick="imgChange('${el}')">
+          </div>
+        </div>
         `;
       })
     }
 
+  //<input type="radio" name="user__select" id="user${i}" class="user__select" onclick="userDetail('${el}')">
     function userDetail(user) {
       let selectUser = document.querySelectorAll(`.${user}`);
       //console.log(selectUser);
