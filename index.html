@@ -56,14 +56,18 @@
           <li> 배경색/이미지 변경 (v1)</li>
         </ol>
       </ul>
-      <div class="name">이름1</div>
+      <div class="name">
+        <img src="sample.jpg">이름1
+      </div>
       <div class="texts">
         <p>메세지1</p>
         <div>
           <p class="endLine">메세지2</p><span>오전 00:00</span>
         </div>
       </div>
-      <div class="name">이름2</div>
+      <div class="name">
+        <img src="sample.jpg">이름2
+      </div>
       <div class="texts">
         <div>
           <p>메세지1</p><span>오후 00:04</span>
@@ -144,10 +148,13 @@
       result.forEach(el => {
 
         let names = document.createElement("div");
+        let imgDiv = document.createElement('img');
         let texts = document.createElement("div");
-        let time = document.createElement("span");        
+        let time = document.createElement("span");
 
-        names.innerText = el.name;
+        imgDiv.src = 'sample.jpg';
+        names.appendChild(imgDiv);
+        names.innerHTML += el.name;
 
         el.messages.forEach((msg, i)=> {
           let p = document.createElement("p");
@@ -166,6 +173,7 @@
         
         names.classList += `name ${el.name}`;
         texts.classList += "texts";
+
         outputDiv.appendChild(names);
         outputDiv.appendChild(texts);
         
@@ -193,19 +201,22 @@
     
     function imgChange(targetName) {
       console.log("imgChange Clicked");
-      PROFILES = document.querySelectorAll(`.${targetName}`);
+      PROFILES = document.querySelectorAll(`.${targetName} img`);
       let PROFILE = document.querySelector('#profile');
       console.log("test", targetName, PROFILES);
 
       PROFILE.addEventListener('change', function (event) {
         const file = event.target.files[0]; // 사용자가 선택한 첫 번째 파일 가져오기
-        console.log(file);
+
         PROFILES.forEach(el => {
+          
           console.log("el", el);
+
           if (file) {
             const reader = new FileReader();
             reader.onload = function (e) {
-              el.style.setProperty("--color-before", `url('${e.target.result}')`);
+              el.setAttribute('src', e.target.result);
+              //el.style.setProperty("--color-before", `url('${e.target.result}')`);
             };
             reader.readAsDataURL(file);
           }
@@ -220,8 +231,8 @@
         //result = [...new Set(result[1])];
         btnArea.innerHTML += `
           <input type="radio" name="user__select" id="user${i}" class="user__select" onclick="userDetail('${el}')">
-          <label for="user${i}">
-            <img src="" class="profileImg ${el}">
+          <label for="user${i}" class="${el}">
+            <img src="sample.jpg" class="profileImg">
             ${el}
             <button onclick="test(this)" value="${el}" class="btn__makeMe">'나'로 설정하기</button>
           </label>
@@ -253,7 +264,7 @@
 <!--
 <div>
   <h3>${el}</h3>
-  <img src="sample.jpeg" alt="${el} profile">
+  <img src="sample.jpg" alt="${el} profile">
   <input type="file" name="profile" class="profileInput" accept="image/*" onclick="imgChange('${el}')">
   <button onclick="test(this)" value="이름1">이름1</button>
 </div>

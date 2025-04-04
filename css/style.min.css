@@ -107,8 +107,7 @@ body > section {
 .preview .name:not(:first-child) {
   padding-top: 24px;
 }
-.preview .name:not(.right)::before {
-  content: "";
+.preview .name:not(.right) img {
   display: flex;
   width: 40px;
   height: 40px;
@@ -118,6 +117,9 @@ body > section {
 }
 .preview .name.right {
   color: transparent;
+}
+.preview .name.right img {
+  display: none;
 }
 .preview .texts {
   display: flex;

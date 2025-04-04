@@ -146,8 +146,8 @@ body {
     width: 100%;
     margin-bottom: 6px;
     &:not(:first-child){padding-top:24px;}
-    &:not(.right)::before{
-      content: '';
+    &:not(.right) img{
+      //content: 'url()';
       display: flex;
       width: $pfSize; height: $pfSize;
       background: var(--color-before, var(--kakaoColor)) no-repeat center center / cover;
@@ -156,6 +156,9 @@ body {
     }
     &.right {
       color: transparent;
+      img {
+        display: none;
+      }
     }
   }
 
