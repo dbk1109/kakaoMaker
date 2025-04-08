@@ -235,13 +235,13 @@
         <div class="user">
           <div class="users--left">
             <label for="user${i}" class="${el}">
-              <input type="radio" name="btn__makeMe" id="btn__makeMe" value="${el}" class="btn__makeMe" onchange="test(this)">
               <img src="sample.jpg" class="profileImg">
               <h3>${el}</h3>
               <input type="text" name="test" id="test" value="${el}" disabled>
             </label>
           </div>
           <div class="users--right">
+            <input type="radio" name="btn__makeMe" id="btn__makeMe" value="${el}" class="btn__makeMe" onchange="test(this)">
             <label for="profile_${el}">이미지 변경</label>
             <input type="file" name="profile" id="profile_${el}" class="profileInput" accept="image/*" onclick="imgChange('${el}')">
           </div>

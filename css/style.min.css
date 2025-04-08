@@ -233,6 +233,9 @@ body > section {
 #users > * {
   gap: 8px;
 }
+#users .user {
+  display: flex;
+}
 #users label {
   display: flex;
   justify-content: center;
@@ -254,9 +257,6 @@ body > section {
 }
 .users--right h3 {
   margin: 0 0 8px 0;
-}
-.users--right .user {
-  display: flex;
 }
 
 .btn__create {
