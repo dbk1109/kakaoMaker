@@ -11,7 +11,7 @@ $leftWidth: 400px;
 $leftHeight: 80%;
 
 :root {
-  --kakaoColor: #F9DF03;
+  --kakaoColor: #FEE402;
   --white: #ffffff;
 }
 
@@ -121,8 +121,8 @@ body {
 .preview {
   padding-left: 50px;
   #output {
-    @include boxDetail();
-    min-width: $leftWidth;
+    @include boxDetail($br, 14px 10px);
+    width: $leftWidth;
     min-height: 50%;
     font-size: 14px;
     background-color: var(--previewBackground, #B2C7D9);
@@ -146,13 +146,14 @@ body {
     width: 100%;
     margin-bottom: 6px;
     &:not(:first-child){padding-top:24px;}
-    &:not(.right) img{
+    &:not(:first-child).right {padding-top:10px;}
+    img{
       //content: 'url()';
       display: flex;
       width: $pfSize; height: $pfSize;
       background: var(--color-before, var(--kakaoColor)) no-repeat center center / cover;
-      border-radius: $pdg;
-      margin-top: -4px;
+      border-radius: 16px;
+      margin-top: -1px;
     }
     &.right {
       color: transparent;
@@ -170,9 +171,10 @@ body {
     margin-top: calc(4px - $pdg);
     p {
       background: white;
-      @include boxDetail(4px, 10px);
+      @include boxDetail(4px, 8px 12px);
       margin: 0;
       width: max-content;
+      max-width: 256px;
       position: relative;
       z-index: 0;
       &:first-child:not(.endLine)::before {
@@ -182,13 +184,20 @@ body {
     > div {
       display: flex;
       align-items: flex-end;
-      gap: $br;
-      span { font-size:12px;}
+      gap: $br / 2;
+      span { font-size:13px;}
     }
     &.right {
       align-items: flex-end;
+      padding-right: 8px;
       > div{flex-direction:row-reverse}
-      p:first-child::before { @include msgArrow('right')}
+      p {
+        background-color: var(--kakaoColor);
+        &:first-child:not(.endLine)::before { 
+          @include msgArrow('right');
+          border-top-color: var(--kakaoColor);
+        }
+      }
     }
   }
 }
@@ -246,6 +255,7 @@ body {
   > * { gap: $br;}
   .user {
     display: flex;
+    width: 100%;
   }
   //> * { border: 1px solid;}
   label {
