@@ -84,6 +84,51 @@
         <label for="isTitle">타이틀 추가</label>
         <input type="checkbox" name="isDelete" id="isDelete">
         <label for="isDelete">삭제마크 추가</label>
+        <input type="checkbox" name="isColoring" id="isColoring">
+        <label for="isColoring">색상변경</label>
+        <div class="coloringBox" style="display: none;">
+          <input type="color" name="cPicker" id="cPicker" value="#00ff00">
+          <input type="file" name="bgImg" id="bgImg" class="bgImgInput" accept="image/*" style="display: block !important;">
+        </div>
+        <p class="textPrint"></p>
+        <script>
+
+          let checkbox = document.querySelector('#isColoring');
+          let pBox = document.querySelector('.textPrint');
+          let coloringBox = document.querySelector('.coloringBox');
+          let cPicker = document.querySelector('#cPicker');
+          let bgImg = document.querySelector('#bgImg');
+
+          checkbox.addEventListener('change', function () {
+            if (checkbox.checked) {
+              pBox.innerText = '✅ 체크됨!';
+              coloringBox.style.display = 'block';
+            } else {
+              pBox.innerText = '❌ 체크 해제됨!';
+              coloringBox.style.display = 'none';
+              outputDiv.style.backgroundColor = 'var(--previewBackground, #B2C7D9)';
+            }
+          });
+
+          cPicker.addEventListener('input', function() {
+            outputDiv.style.backgroundColor = cPicker.value;
+          });
+
+          bgImg.addEventListener('input', function(event) {
+            const file = event.target.files[0]; // 사용자가 선택한 첫 번째 파일 가져오기
+
+            if (file) {
+              const reader = new FileReader();
+              reader.onload = function (e) {
+                outputDiv.style.background = 'url("' + e.target.result + '") no-repeat center / cover' ;
+                //el.style.setProperty("--color-before", `url('${e.target.result}')`);
+              };
+              reader.readAsDataURL(file);
+            }
+
+          })
+
+        </script>
       </div>
     </div>
     <div class="step2">
