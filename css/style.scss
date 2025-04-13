@@ -124,6 +124,8 @@ body {
     @include boxDetail($br, 14px 10px);
     width: $leftWidth;
     min-height: 50%;
+    max-height: 100%;
+    overflow-y: auto;
     font-size: 14px;
     background-color: var(--previewBackground, #B2C7D9);
     position: relative;
@@ -139,6 +141,15 @@ body {
     //  border-radius: 6px 6px 0 0;
     //  //position: absolute; top: 0;left: 0;
     //}
+    .photos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(calc(100% / 3.1), 1fr));
+      gap: 2px;
+      img {
+        width: 100%; height: auto;
+        aspect-ratio: 1 / 1;
+      }
+    } 
   }
   .name {
     display: flex;
@@ -289,8 +300,13 @@ body {
     align-items: center;
   }
   &--right {
-    width: 100%;
+    //width: 100%;
     h3 {margin: 0 0 $br 0;}
+    label {
+      padding: $br !important;
+      background-color: var(--kakaoColor);
+      border-radius: $br;
+    }
   }
 }
 
@@ -302,6 +318,7 @@ body {
   &__makeMe {
     padding: 5px;
     margin-left: 8px;
+
   }
 }
 

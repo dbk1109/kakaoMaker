@@ -93,10 +93,22 @@ body > section {
   padding: 14px 10px;
   width: 400px;
   min-height: 50%;
+  max-height: 100%;
+  overflow-y: auto;
   font-size: 14px;
   background-color: var(--previewBackground, #B2C7D9);
   position: relative;
   box-shadow: 0 0 20px #a9a9a9;
+}
+.preview #output .photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(32.2580645161%, 1fr));
+  gap: 2px;
+}
+.preview #output .photos img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1/1;
 }
 .preview .name {
   display: flex;
@@ -262,11 +274,13 @@ body > section {
   display: flex;
   align-items: center;
 }
-.users--right {
-  width: 100%;
-}
 .users--right h3 {
   margin: 0 0 8px 0;
+}
+.users--right label {
+  padding: 8px !important;
+  background-color: var(--kakaoColor);
+  border-radius: 8px;
 }
 
 .btn__create {

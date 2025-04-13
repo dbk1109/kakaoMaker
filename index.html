@@ -36,7 +36,7 @@
 [이름2] 오후 2:00
 메세지메세지메세지
 메세지메세지
-메세지
+@사진
 
 [이름2] 오후 2:02
 새벽 메세지</textarea>
@@ -106,12 +106,12 @@
             } else {
               pBox.innerText = '❌ 체크 해제됨!';
               coloringBox.style.display = 'none';
-              outputDiv.style.backgroundColor = 'var(--previewBackground, #B2C7D9)';
+              outputDiv.style.background = 'var(--previewBackground, #B2C7D9)';
             }
           });
 
           cPicker.addEventListener('input', function() {
-            outputDiv.style.backgroundColor = cPicker.value;
+            outputDiv.style.background = cPicker.value;
           });
 
           bgImg.addEventListener('input', function(event) {
@@ -180,12 +180,13 @@
         if (match) {
           // 새 대화 시작: 기존 대화를 저장 후 새로운 객체 생성
           if (current) result.push(current);
-
           current = { name: match[1], time: match[2], messages: [] };
         } else if (current) {
           // 메시지 추가
           let trimmedMsg = msg.trim(); // 앞뒤 공백 제거
-          if (trimmedMsg) current.messages.push(trimmedMsg); // 빈 줄이 아닐 때만 추가
+          if (trimmedMsg) {
+            current.messages.push(trimmedMsg); // 빈 줄이 아닐 때만 추가
+          }
         }
       });
       if (current) result.push(current);
@@ -204,15 +205,22 @@
         el.messages.forEach((msg, i)=> {
           let p = document.createElement("p");
           let cover = document.createElement('div');
-          p.innerText = msg;
-          if (i === el.messages.length - 1) { // 마지막거라면
-              time.innerHTML = el.time;
-              cover.appendChild(p);
-              cover.appendChild(time);
-              texts.appendChild(cover);
-              if (el.messages.length >1 ){ p.classList +="endLine";};
+          if (msg == "@사진") {
+            p.innerHTML = `
+              <input type="file" name="photo" id="photo_${i}" class="photos" accept="image/*" multiple>
+            `;
           } else {
-              texts.appendChild(p);
+            p.innerText = msg;
+          }
+          console.log();
+          if (i === el.messages.length - 1) { // 마지막거라면
+            time.innerHTML = el.time;
+            cover.appendChild(p);
+            cover.appendChild(time);
+            texts.appendChild(cover);
+            if (el.messages.length >1 ){ p.classList +="endLine";};
+          } else {
+            texts.appendChild(p);
           }
         });
         
@@ -229,6 +237,33 @@
 
   parseText();
 
+  document.querySelectorAll(".photos").forEach(el => {
+    el.addEventListener('change', function (event) {
+      const files = event.target.files; // 여러 파일
+      // 개별 div 생성
+      let DIVS = document.createElement('div');
+      DIVS.classList.add("photos");
+
+      Array.from(files).forEach(file => {
+        if (file && file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+
+            let IMG = document.createElement('img');
+            IMG.src = e.target.result;
+
+            DIVS.appendChild(IMG);
+            el.parentElement.appendChild(DIVS);
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    });
+  });
+
+  
+
+  
   /// 말하는사람 체크
     function test(btn) {
       let names = document.querySelectorAll('.name');
@@ -279,6 +314,8 @@
         btnArea.innerHTML += `
         <div class="user">
           <div class="users--left">
+            <input type="radio" name="btn__makeMe" id="btn__makeMe_${el}" value="${el}" class="btn__makeMe" onchange="test(this)">
+            <label for="btn__makeMe_${el}">'나'로 만들기</label>
             <label for="user${i}" class="${el}">
               <img src="sample.jpg" class="profileImg">
               <h3>${el}</h3>
@@ -286,7 +323,6 @@
             </label>
           </div>
           <div class="users--right">
-            <input type="radio" name="btn__makeMe" id="btn__makeMe" value="${el}" class="btn__makeMe" onchange="test(this)">
             <label for="profile_${el}">이미지 변경</label>
             <input type="file" name="profile" id="profile_${el}" class="profileInput" accept="image/*" onclick="imgChange('${el}')">
           </div>
@@ -317,27 +353,3 @@
 
 </body>
 </html>
-<!--
-<div>
-  <h3>${el}</h3>
-  <img src="sample.jpg" alt="${el} profile">
-  <input type="file" name="profile" class="profileInput" accept="image/*" onclick="imgChange('${el}')">
-  <button onclick="test(this)" value="이름1">이름1</button>
-</div>
-<button onClick="test(this)" value="${el}">${el}</button>
-
-
-      <div class="users--left">
-        <h3>민규</h3>어쩌구 저쩌구
-        
-      </div>
-      <div class="users--right">
-        <label for="profile">
-          <img src=".jpeg" alt="`${name} 이미지`" class="profileImg">
-          이미지 변경
-        </label>
-        <input type="file" name="profile" id="profile" class="profileInput" accept="image/*" onclick="imgChange('이름1')">
-        <button onclick="test(this)" value="이름1">이름1</button>
-      </div>
-
--->
