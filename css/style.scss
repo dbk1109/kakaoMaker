@@ -143,11 +143,12 @@ body {
     //}
     .photos {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(calc(100% / 3.1), 1fr));
-      gap: 2px;
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
       img {
         width: 100%; height: auto;
         aspect-ratio: 1 / 1;
+        object-fit: cover;
+        grid-column: span 1;
       }
     } 
   }
@@ -188,6 +189,7 @@ body {
       max-width: 256px;
       position: relative;
       z-index: 0;
+      overflow: hidden;
       &:first-child:not(.endLine)::before {
         @include msgArrow(left);
       }

@@ -102,13 +102,15 @@ body > section {
 }
 .preview #output .photos {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(32.2580645161%, 1fr));
-  gap: 2px;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
 }
 .preview #output .photos img {
   width: 100%;
   height: auto;
   aspect-ratio: 1/1;
+  -o-object-fit: cover;
+     object-fit: cover;
+  grid-column: span 1;
 }
 .preview .name {
   display: flex;
@@ -153,6 +155,7 @@ body > section {
   max-width: 256px;
   position: relative;
   z-index: 0;
+  overflow: hidden;
 }
 .preview .texts p:first-child:not(.endLine)::before {
   content: "";
