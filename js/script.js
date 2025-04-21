@@ -4,11 +4,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const coloringBox = document.querySelector(".coloringBox");
   const cPicker = document.querySelector("#cPicker");
   const bgImg = document.querySelector("#bgImg");
-  const foldable = document.querySelector(".foldable");
-  const handle = foldable.querySelector(".handle");
   const outputDiv = document.getElementById("output");
   const btnArea = document.querySelector("#users");
-  const detailArea = document.querySelector("#details");
+  const btnCreate = document.querySelector(".btn__create");
+
 
   let result = [];
   let nameList = [];
@@ -37,10 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
     reader.readAsDataURL(file);
   });
 
-  handle.addEventListener("click", () => {
-    foldable.classList.toggle("open");
-    handle.innerText = foldable.classList.contains("open") ? "close" : "open";
-  });
+  btnCreate.addEventListener("click", parseText);
+
 
   function parseText() {
     outputDiv.innerHTML = "";
@@ -171,19 +168,18 @@ document.addEventListener("DOMContentLoaded", () => {
       userDiv.classList.add("user");
 
       userDiv.innerHTML = `
-        <div class="user--left">
-          <input type="radio" name="btn__makeMe" id="btn__makeMe_${el}" value="${el}" class="btn__makeMe ">
-          <label for="btn__makeMe_${el}" class="btn--yellow">'나'로 만들기</label>
-          <label for="user${i}" class="${el}">
-            <img src="sample.jpg" class="profileImg">
-            <h3>${el}</h3>
-            <input type="text" value="${el}" disabled>
-          </label>
-        </div>
-        <div class="user--right">
-          <label for="profile_${el}" class="btn--yellow">이미지 변경</label>
-          <input type="file" id="profile_${el}" class="profileInput" accept="image/*">
-        </div>
+<div class="user--left">
+  <input type="radio" name="btn__makeMe" id="btn__makeMe_${el}" value="${el}" class="btn__makeMe ">
+  <label for="profile_${el}" class="${el}"><img src="sample.jpg" class="profileImg"></label>
+</div>
+<div class="user--right">
+  <h4>${el}</h4>
+  <div style="display: flex; gap: 6px;">
+    <input type="file" id="profile_${el}" class="profileInput" accept="image/*">
+    <label for="profile_${el}" class="${el} btn btn--yellow">이미지 변경하기</label>
+    <label for="btn__makeMe_${el}" class="btn btn--gray">'나'로 만들기</label>
+  </div>
+</div>
       `;
 
       btnArea.appendChild(userDiv);
@@ -197,5 +193,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  parseText();
+  //parseText();
 });

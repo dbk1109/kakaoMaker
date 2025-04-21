@@ -8,8 +8,7 @@
   <title>Document</title>
 </head>
 <body>
-  <section class="typeArea foldable open">
-    <div class="handle">close </div>
+  <section class="typeArea foldable">
     <div class="title">
       <h1>카톡 메이커 (v2)</h1>
       <p>이것은 픽션 카톡을 만들기 위하여 만들어진 페이지입니다.</p>
@@ -42,7 +41,49 @@
 [이름2] 오후 2:02
 새벽 메세지</textarea>
   
-    <button class="btn__create" onclick="parseText()">생성하기</button>
+    <button class="btn__create">생성하기</button>
+  </section>
+
+  <section class="setting">
+    <div class="step1">
+      <h2> <span>Step 1</span> 카톡 셋팅</h2>
+      <div id="basic">
+        <input type="checkbox" name="isTitle" id="isTitle">
+        <label for="isTitle">타이틀 추가</label>
+        <input type="checkbox" name="isDelete" id="isDelete">
+        <label for="isDelete">삭제마크 추가</label>
+        <input type="checkbox" name="isColoring" id="isColoring">
+        <label for="isColoring">색상변경</label>
+        <div class="coloringBox" style="display: none;">
+          <input type="color" name="cPicker" id="cPicker" value="#00ff00">
+          <input type="file" name="bgImg" id="bgImg" class="bgImgInput" accept="image/*" style="display: block !important;">
+        </div>
+        <p class="textPrint"></p>
+      </div>
+    </div>
+    <div class="step2">
+      <h2> <span>Step 2</span> 유저 설정 <button class="btn">저장</button></h2>
+      <div id="users">
+        <!--
+  <div class="user--left">
+    <input type="file" id="profile_${el}" class="profileInput" accept="image/*">
+    <label for="profile_${el}" class="${el}"><img src="sample.jpg" class="profileImg"></label>
+  </div>
+  <div class="user--right">
+    <h4>${el}</h4>
+    <div style="display: flex;">
+      <input type="radio" name="btn__makeMe" id="btn__makeMe_${el}" value="${el}" class="btn__makeMe ">
+      <label for="btn__makeMe_${el}" class="btn--yellow">'나'로 만들기</label>
+    </div>
+  </div>-->
+
+      </div>
+    </div>
+    <div class="step3" style="display: none;">
+      <h2> <span>Step 3</span> 유저 디테일 변경</h2>
+      <div id="details"> </div>
+    </div>
+
   </section>
 
   <section class="preview">
@@ -50,11 +91,11 @@
       <h2><br>안내</h2>
       <ul>
         <li>형식을 지키지 않으면 제대로 나오지 않습니다.</li>
-        <li>업데이트 목록</li>
+        <li>다음 업데이트 목록</li>
         <ol>
           <li> 이미지 내보내기 (저장)
-          <li> 메세지 삭제 표현 (왼쪽 텍스트에서 수정)</li>
-          <li> 배경색/이미지 변경 (v1)</li>
+          <!--<li> 메세지 삭제 표현 (왼쪽 텍스트에서 수정)</li>-->
+          <!--<li> 배경색/이미지 변경 (v1)</li>-->
         </ol>
       </ul>
       <div class="name">
@@ -77,33 +118,8 @@
     </div>
   </section>
 
-  <section class="setting">
-    <div class="step1">
-      <h2> <span>Step 1</span> 카톡 셋팅</h2>
-      <div id="basic">
-        <input type="checkbox" name="isTitle" id="isTitle">
-        <label for="isTitle">타이틀 추가</label>
-        <input type="checkbox" name="isDelete" id="isDelete">
-        <label for="isDelete">삭제마크 추가</label>
-        <input type="checkbox" name="isColoring" id="isColoring">
-        <label for="isColoring">색상변경</label>
-        <div class="coloringBox" style="display: none;">
-          <input type="color" name="cPicker" id="cPicker" value="#00ff00">
-          <input type="file" name="bgImg" id="bgImg" class="bgImgInput" accept="image/*" style="display: block !important;">
-        </div>
-        <p class="textPrint"></p>
-      </div>
-    </div>
-    <div class="step2">
-      <h2> <span>Step 2</span> 유저 설정</h2>
-      <div id="users"> </div>
-    </div>
-    <div class="step3" style="display: none;">
-      <h2> <span>Step 3</span> 유저 디테일 변경</h2>
-      <div id="details"> </div>
-    </div>
 
-  </section>
+  <button id="SAVE">SAVE</button>
 
 </body>
 </html>

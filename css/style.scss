@@ -74,7 +74,7 @@ body {
     cursor: pointer;
     position: relative;
     will-change: transform;
-    transition: all 0.3s;
+    transition: transform 0.3s;
     &:hover {
       transform: scale(0.95);
     }
@@ -98,24 +98,24 @@ body {
   min-width: $leftWidth;
   background-color: var(--kakaoColor);
   z-index: 9;
-  position: fixed;
-  transform: translateX(-$leftWidth);
-  transition: translateX 0.3s;
-  &.open { 
-    transform: translateX(0); 
-    position: relative;
-  }
-  .handle {
-    $size: 32px;
-    position: absolute;
-    left: $leftWidth;
-    padding: 10px 5px 10px 10px;
-    border-radius: 0 $br $br 0;
-    background: var(--kakaoColor);
-    text-transform: uppercase;
-    cursor: pointer;
-    writing-mode: vertical-rl;
-  }
+  //position: fixed;
+  //transform: translateX(-$leftWidth);
+  //transition: translateX 0.3s;
+  //&.open { 
+  //  transform: translateX(0); 
+  //  position: relative;
+  //}
+  //.handle {
+  //  $size: 32px;
+  //  position: absolute;
+  //  left: $leftWidth;
+  //  padding: 10px 5px 10px 10px;
+  //  border-radius: 0 $br $br 0;
+  //  background: var(--kakaoColor);
+  //  text-transform: uppercase;
+  //  cursor: pointer;
+  //  writing-mode: vertical-rl;
+  //}
 }
 
 
@@ -190,7 +190,6 @@ body {
       max-width: 256px;
       position: relative;
       z-index: 0;
-      overflow: hidden;
       &:first-child:not(.endLine)::before {
         @include msgArrow(left);
       }
@@ -236,21 +235,18 @@ body {
       border-radius: 0 8px 8px 0;
     }
   }
-  img {
-    $pfSize: $pfSize * 2;
-    width: $pfSize; height: $pfSize;
-    min-width: $pfSize; min-height: $pfSize;
-    max-width: $pfSize; max-height: $pfSize;
-    border-radius: 50%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    background: var(--color-before, var(--kakaoColor)) no-repeat center center / cover;
-  }
   input[type=file],input[type="radio"].user__select {
     display: none;
   }
-  input[type="radio"]:checked + label {
-    //background-color: red;
+  .profileImg {
+    $pfSize: $pfSize * 1.75;
+    width: $pfSize; height: $pfSize;
+    min-width: $pfSize; min-height: $pfSize;
+    max-width: $pfSize; max-height: $pfSize;
+    border-radius: 32px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background: var(--color-before, var(--kakaoColor)) no-repeat center center / cover;
   }
 }
 
@@ -269,6 +265,7 @@ body {
   > * { gap: $br;}
   .user {
     display: flex;
+    align-items: center;
     width: 100%;
     &--left {
       display: flex;
@@ -277,10 +274,12 @@ body {
     }
     &--right {
       //width: 100%;
-      h3 {margin: 0 0 $br 0;}
+      //display: flex;
+      gap: $br;
+      h4 {margin: 0 0 $br 0;}
     }
   }
-  > * { border: 1px solid;}
+  //> * { border: 1px solid;}
   label {
     display: flex;
     //flex-direction: column;
@@ -290,7 +289,7 @@ body {
     overflow: hidden;
     font-size: 14px;
     padding: 0;
-    transition: all 0.2s;
+    transition: scale 0.2s;
     cursor: pointer;
     //&:hover {
     //  transform: scale(0.95);
@@ -306,6 +305,8 @@ body {
   }
 }
 .btn {
+  padding: $br !important;
+  border-radius: 6px;
   &__create {
     background-color: #633C14;
     color: white;
@@ -316,8 +317,9 @@ body {
   }
   &--yellow {
     background: var(--kakaoColor);
-    padding: $br !important;
-    border-radius: 6px;
+  }
+  &--gray {
+    background: buttonface;
   }
 }
 
@@ -388,3 +390,11 @@ body {
 //[type="checkbox"]:enabled:hover {
 //  box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
 //}
+
+
+#SAVE {
+  position: fixed;
+  bottom: $pdg;
+  right: $pdg;
+  background: var(--kakaoColor);
+}
