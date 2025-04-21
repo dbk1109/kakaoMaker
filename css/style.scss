@@ -66,6 +66,7 @@ body {
     @include boxDetail();
     font-family: Arial, Helvetica, sans-serif;
     min-height: $leftHeight;
+    resize: none;
   }
   button {
     border: 0;
@@ -99,7 +100,7 @@ body {
   z-index: 9;
   position: fixed;
   transform: translateX(-$leftWidth);
-  transition: all 0.3s;
+  transition: translateX 0.3s;
   &.open { 
     transform: translateX(0); 
     position: relative;
@@ -269,8 +270,17 @@ body {
   .user {
     display: flex;
     width: 100%;
+    &--left {
+      display: flex;
+      //flex-direction: column;
+      align-items: center;
+    }
+    &--right {
+      //width: 100%;
+      h3 {margin: 0 0 $br 0;}
+    }
   }
-  //> * { border: 1px solid;}
+  > * { border: 1px solid;}
   label {
     display: flex;
     //flex-direction: column;
@@ -295,23 +305,6 @@ body {
     //}
   }
 }
-.users {
-  &--left {
-    display: flex;
-    //flex-direction: column;
-    align-items: center;
-  }
-  &--right {
-    //width: 100%;
-    h3 {margin: 0 0 $br 0;}
-    label {
-      padding: $br !important;
-      background-color: var(--kakaoColor);
-      border-radius: $br;
-    }
-  }
-}
-
 .btn {
   &__create {
     background-color: #633C14;
@@ -320,7 +313,11 @@ body {
   &__makeMe {
     padding: 5px;
     margin-left: 8px;
-
+  }
+  &--yellow {
+    background: var(--kakaoColor);
+    padding: $br !important;
+    border-radius: 6px;
   }
 }
 
