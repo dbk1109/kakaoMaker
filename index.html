@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <link rel="stylesheet" href="./css/style.min.css">
   <script src="./js/script.js"></script>
   <title>Document</title>
@@ -120,7 +120,27 @@
   </section>
 
 
-  <button id="SAVE">SAVE</button>
+  <button class="btn__download">이미지 저장</button>
 
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const preview = document.querySelector("#output");
+        const downloadBtn = document.querySelector(".btn__download");
+
+        downloadBtn.addEventListener("click", () => {
+          html2canvas(output, {
+            backgroundColor: "#a7c6e0",
+            scale: 1 // 일단 기본값으로 확인
+          }).then(canvas => {
+            document.body.appendChild(canvas); // 화면에 캔버스를 띄워 직접 확인
+          });
+        });
+        
+
+        // 👇 기존의 parseText, imgChange 등도 여기에 같이 들어감
+      });
+
+  </script>
 </body>
 </html>

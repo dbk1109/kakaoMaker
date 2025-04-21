@@ -194,4 +194,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //parseText();
+
+  const btnDownload = document.querySelector(".btn__download");
+
+  btnDownload.addEventListener("click", () => {
+    html2canvas(outputDiv).then((canvas) => {
+      const link = document.createElement("a");
+      link.download = "kakaotalk_image.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    });
+  });
 });
