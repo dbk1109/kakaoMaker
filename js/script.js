@@ -195,14 +195,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //parseText();
 
+  
+
   const btnDownload = document.querySelector(".btn__download");
 
   btnDownload.addEventListener("click", () => {
-    html2canvas(outputDiv).then((canvas) => {
+    html2canvas(outputDiv, {
+      backgroundColor: null, // 배경 투명 제거
+      useCORS: true, // 외부 이미지 색상 보존
+      scale: 2, // 고해상도 저장 (색상 깨짐 방지)
+    }).then((canvas) => {
       const link = document.createElement("a");
       link.download = "kakaotalk_image.png";
       link.href = canvas.toDataURL("image/png");
       link.click();
     });
+
   });
+
+
+
+
+
 });
