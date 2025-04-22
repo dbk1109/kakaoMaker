@@ -85,18 +85,6 @@ body > section {
   position: relative;
   box-shadow: 0 0 20px #a9a9a9;
 }
-.preview #output .photos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-}
-.preview #output .photos img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1/1;
-  -o-object-fit: cover;
-     object-fit: cover;
-  grid-column: span 1;
-}
 .preview .name {
   display: flex;
   gap: 12px;
@@ -190,6 +178,21 @@ body > section {
   top: 6px;
   z-index: -1;
   border-top-color: var(--kakaoColor);
+}
+.preview .photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  border-radius: 4px;
+  padding: 0;
+  overflow: hidden;
+}
+.preview .photos img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1/1;
+  -o-object-fit: cover;
+     object-fit: cover;
+  grid-column: span 1;
 }
 
 .setting {
