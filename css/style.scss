@@ -146,6 +146,7 @@ body {
       background: var(--color-before, var(--kakaoColor)) no-repeat center center / cover;
       border-radius: 16px;
       margin-top: -1px;
+      object-fit: cover;
     }
     &.right {
       color: transparent;

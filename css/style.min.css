@@ -104,6 +104,8 @@ body > section {
   background: var(--color-before, var(--kakaoColor)) no-repeat center center/cover;
   border-radius: 16px;
   margin-top: -1px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .preview .name.right {
   color: transparent;
