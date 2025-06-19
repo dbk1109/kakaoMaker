@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let current = null;
 
     messages.forEach((msg) => {
-      const match = msg.match(/^\[([^\]]+)\]\s*(.+)$/); // ← 수정됨
+      const match = msg.match(/^\[([^\]]+?)\]\s*(.+)$/); // ✅ 이 라인 수정됨
       if (match) {
         if (current) result.push(current);
         current = { name: match[1], time: match[2], messages: [] };
